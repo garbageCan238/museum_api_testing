@@ -2,8 +2,8 @@ from pydantic import BaseModel, Field
 
 
 class ArtObjects(BaseModel):
-    total: int
-    object_ids: list[int] | None = Field(alias='objectIDs')
+    total: int = Field(default=0)
+    object_ids: list[int] | None = Field(alias='objectIDs', default=None)
 
 
 class ArtObject(BaseModel):
@@ -17,3 +17,6 @@ class ArtObject(BaseModel):
 
 class SearchResult(ArtObjects):
     pass
+
+
+empty_search_result_model = SearchResult()

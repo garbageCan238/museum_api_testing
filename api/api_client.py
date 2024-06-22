@@ -33,5 +33,5 @@ class MuseumApi(ApiClient):
         return self.get(APIRoutes.DEPARTMENTS)
 
     def get_search_api(self, params: dict):
-        logger.info(f'Getting search result')
+        logger.info(f'Getting search result with params: {params}')
         return self.get(f'{APIRoutes.SEARCH}', params=params)
