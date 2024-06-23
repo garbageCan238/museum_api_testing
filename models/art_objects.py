@@ -19,4 +19,3 @@ class SearchResult(ArtObjects):
     pass
 
 
-empty_search_result_model = SearchResult()

@@ -1,15 +1,15 @@
 import os
-import datetime
 import time
-
 import pytest
 from loguru import logger
 from api.api_client import MuseumApi
 from dotenv import load_dotenv
 
 
-@pytest.fixture(scope='session', autouse=True)
-def configure_logging():
+def pytest_configure():
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    load_dotenv(dotenv_path='.env')
+
     log_filename = f'log_{time.strftime("%Y-%m-%d_%H-%M-%S")}.log'
     logger.remove()
     logger.add(f'logs/{log_filename}', format='{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}', level='DEBUG')
@@ -33,7 +33,6 @@ def pytest_runtest_makereport(item, call):
 
 @pytest.fixture(scope='module')
 def api_client():
-    load_dotenv(dotenv_path='.env')
-    client = MuseumApi(os.getenv('BASE_URL'))
+    client = MuseumApi(os.getenv('API_URL'))
     logger.debug('API client created')
     return client

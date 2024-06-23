@@ -1,6 +1,6 @@
 from pydantic import BaseModel
-
-from models.art_objects import SearchResult
+from httpx import Response
+from utils.file_utils import read_json_test_data
 
 
 def validate_schema(response, model: type(BaseModel)):
@@ -12,6 +12,9 @@ def assert_status_code(response, expected_code):
     assert response.status_code == expected_code
 
 
-def assert_response_body_fields(response, expected: BaseModel):
-    actual = expected.model_validate(response.json())
-    assert actual == expected
+def assert_response_body_fields(response: Response, json_filename: str):
+    actual = response.json()
+    expected = read_json_test_data(json_filename)
+    for actual_key, expected_key in zip(actual.keys(), expected.keys()):
+        assert actual_key == expected_key
+        assert actual[actual_key] == expected[expected_key]
