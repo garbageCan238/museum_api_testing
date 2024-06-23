@@ -44,7 +44,6 @@ def test_get_search_result_with_future_date(api_client, request):
     response = api_client.get_search_api(params)
     assert_status_code(response, HTTPStatus.OK)
     validate_schema(response, SearchResult)
-    # assert_response_body_fields(response, empty_search_result_model)
     assert_response_body_fields(response, request)
 
 
